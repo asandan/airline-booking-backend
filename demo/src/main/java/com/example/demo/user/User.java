@@ -3,7 +3,7 @@ package com.example.demo.user;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "users")
 public class User {
     @Id
     @SequenceGenerator(
@@ -17,17 +17,18 @@ public class User {
     )
     private Long id;
     private String name;
+    @Column(unique = true)
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
     private String password;
 
     public User() {}
 
-    public User(Long id,
-                String name,
+    public User(String name,
                 String email,
+                String phoneNumber,
                 String password) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
