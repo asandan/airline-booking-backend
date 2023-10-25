@@ -1,6 +1,9 @@
 package com.example.demo.user;
 
+import com.example.demo.booking.Booking;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +25,10 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
+
+    @OneToMany
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private List<Booking> bookings;
 
     public User() {}
 
