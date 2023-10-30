@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,6 +24,14 @@ public class UserService {
     }
 
     public User signUp(User user) throws Exception {
+        Optional<User> foundUser = Optional.ofNullable(this.userRepository.
+                findUserByEmail(user.getEmail())
+                .orElse(null));
+
+        if(foundUser.isPresent()){
+            throw new Exception("User already exists");
+        }
+
         String password = bCrypt.encode(user.getPassword());
         try {
             user.setPassword(password);
