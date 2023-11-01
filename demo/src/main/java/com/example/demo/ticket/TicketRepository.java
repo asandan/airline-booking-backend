@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT t FROM Ticket t WHERE t.destination.id=?1")
     Ticket findTicketByDestinationId(Long destinationId);
-
-    Ticket findTicketByDestination(Long destinationId);
 }

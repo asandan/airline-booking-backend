@@ -14,7 +14,7 @@ public class TicketService {
     public Ticket getTicketByDestination(Long destinationId) throws Exception{
         try {
             return ticketRepository.
-                    findTicketByDestination(destinationId).
+                    findTicketByDestinationId(destinationId).
                     orElseThrow(() -> new IllegalStateException(
                                     "Ticket with destinationId " + destinationId
                                             + " does not exist"
