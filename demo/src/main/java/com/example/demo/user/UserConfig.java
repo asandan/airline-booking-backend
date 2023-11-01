@@ -12,7 +12,9 @@ public class UserConfig {
                 "asan.dan.2121@mail.ru",
                 "12345678",
                 "Asan",
-                "Dan")
+                "Dan",
+                500L
+                )
         );
     }
 }

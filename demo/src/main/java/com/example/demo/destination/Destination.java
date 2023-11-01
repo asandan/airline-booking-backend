@@ -3,6 +3,9 @@ package com.example.demo.destination;
 import com.example.demo.city.City;
 import jakarta.persistence.*;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 @Entity
 @Table(name = "destinations")
 public class Destination {
@@ -24,7 +27,7 @@ public class Destination {
 
     @ManyToOne()
     @JoinColumn(name = "destinationTo", referencedColumnName = "id")
-    private City getDestinationTo;
+    private City destinationTo;
 
     private String description;
 
@@ -44,5 +47,9 @@ public class Destination {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Destination orElseThrow(Supplier<? extends RuntimeException> exceptionSupplier) {
+        return Optional.of(this).orElseThrow(exceptionSupplier);
     }
 }

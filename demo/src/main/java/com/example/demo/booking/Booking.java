@@ -1,6 +1,7 @@
 package com.example.demo.booking;
 
 import com.example.demo.ticket.Ticket;
+import com.example.demo.transaction.Transaction;
 import com.example.demo.user.User;
 import jakarta.persistence.*;
 
@@ -26,6 +27,10 @@ public class Booking {
     @ManyToOne()
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "transactionId", referencedColumnName = "id")
+    private Transaction transaction;
 
     private int quantity;
 
