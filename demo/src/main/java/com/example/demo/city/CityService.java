@@ -1,6 +1,5 @@
 package com.example.demo.city;
 
-import com.example.demo.country.CountryRepository;
 import org.springframework.stereotype.Service;
 
 @Service
