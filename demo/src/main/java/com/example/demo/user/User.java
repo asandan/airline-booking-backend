@@ -26,6 +26,8 @@ public class User {
     private String email;
     private String password;
 
+    private Long balance;
+
     @OneToMany
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private List<Booking> bookings;
@@ -35,10 +37,13 @@ public class User {
     public User(String name,
                 String email,
                 String phoneNumber,
-                String password) {
+                String password,
+                Long balance
+    ) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 
     public Long getId() {

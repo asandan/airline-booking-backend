@@ -3,6 +3,9 @@ package com.example.demo.ticket;
 import com.example.demo.destination.Destination;
 import jakarta.persistence.*;
 
+import java.util.Optional;
+import java.util.function.Supplier;
+
 
 @Entity
 @Table(name = "tickets")
@@ -62,5 +65,9 @@ public class Ticket {
         this.destination = destination;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public Ticket orElseThrow(Supplier<? extends RuntimeException> exceptionSupplier) {
+        return Optional.of(this).orElseThrow(exceptionSupplier);
     }
 }
