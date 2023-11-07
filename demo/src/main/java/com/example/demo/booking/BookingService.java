@@ -63,4 +63,12 @@ public class BookingService {
             throw new Exception(e.getMessage());
         }
     }
+
+    public List<Booking> getBookingByUser(Long userId) throws Exception {
+        try {
+            return bookingRepository.findBookingByUserId(userId);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }
