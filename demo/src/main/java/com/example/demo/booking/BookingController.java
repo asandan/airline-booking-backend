@@ -1,10 +1,7 @@
 package com.example.demo.booking;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,16 @@ public class BookingController {
         try {
             Booking booking = this.bookingService.findOne(Long.valueOf(id));
             return ResponseEntity.ok(booking);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping(path = "/book")
+    public Object createBooking(@RequestBody BookingRequest booking) {
+        try {
+            ResponseEntity<String> newBooking = this.bookingService.book(booking);
+            return ResponseEntity.ok(newBooking).toString();
         } catch (Exception e){
             return ResponseEntity.badRequest().body(null);
         }
