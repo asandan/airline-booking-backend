@@ -43,6 +43,10 @@ public class Booking {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getUserId() {
         return user.getId();
     }
