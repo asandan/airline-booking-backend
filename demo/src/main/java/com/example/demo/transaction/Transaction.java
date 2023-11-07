@@ -42,12 +42,24 @@ public class Transaction {
         return booking;
     }
 
+    public void setBookingId(Long bookingId){
+        this.booking.setId(bookingId);
+    }
+
     public void setBooking(Booking booking) {
         this.booking = booking;
     }
 
     public User getUser() {
         return user;
+    }
+
+    public void setUserId(Long userId){
+        this.user.setId(userId);
+    }
+
+    public Long getUserId(){
+        return this.user.getId();
     }
 
     public void setUser(User user) {

@@ -2,11 +2,16 @@ package com.example.demo.booking;
 
 import com.example.demo.ticket.Ticket;
 import com.example.demo.ticket.TicketRepository;
+import com.example.demo.transaction.Transaction;
+import com.example.demo.transaction.TransactionRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,13 +19,26 @@ import java.util.Optional;
 @Service
 public class BookingService {
     private final BookingRepository bookingRepository;
+
     private final TicketRepository ticketRepository;
+
     private final UserRepository userRepository;
 
-    public BookingService(UserRepository userRepository, BookingRepository bookingRepository, TicketRepository ticketRepository){
+    private final TransactionRepository transactionRepository;
+
+
+
+    public BookingService(
+            BookingRepository bookingRepository,
+            TicketRepository ticketRepository,
+            UserRepository userRepository,
+            TransactionRepository transactionRepository
+    ){
         this.bookingRepository = bookingRepository;
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
+
     }
 
     public List<Booking> findAll() {
@@ -35,6 +53,7 @@ public class BookingService {
         }
     }
 
+    @Transactional
     public ResponseEntity<String> book(BookingRequest bookingRequest) throws Exception {
         try {
             Long userId = bookingRequest.getUserId();
@@ -68,16 +87,25 @@ public class BookingService {
             }
 
             Booking booking = new Booking();
+            Transaction transaction = new Transaction();
 
             booking.setUserId(userId);
             booking.setTicketId(ticketId);
             booking.setQuantity(quantity);
 
+            Booking savedBooking = bookingRepository.save(booking);
+
+            transaction.setUserId(userId);
+            transaction.setBookingId(savedBooking.getId());
+            transaction.setPrice(ticket.getPrice() * quantity);
+
+            transactionRepository.save(transaction);
+
             ticket.setQuantity(ticket.getQuantity() - quantity);
 
             ticketRepository.save(ticket);
 
-            return ResponseEntity.ok(bookingRepository.save(booking).toString());
+            return ResponseEntity.ok(savedBooking.toString());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
