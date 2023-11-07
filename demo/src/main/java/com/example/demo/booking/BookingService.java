@@ -2,6 +2,8 @@ package com.example.demo.booking;
 
 import com.example.demo.ticket.Ticket;
 import com.example.demo.ticket.TicketRepository;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
 
-    public BookingService(BookingRepository bookingRepository, TicketRepository ticketRepository) {
+    public BookingService(UserRepository userRepository, BookingRepository bookingRepository, TicketRepository ticketRepository){
         this.bookingRepository = bookingRepository;
         this.ticketRepository = ticketRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Booking> findAll() {
@@ -46,6 +50,21 @@ public class BookingService {
 
             if (ticket.getQuantity() < quantity) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not enough tickets");
+            }
+            Optional<User> userOptional = userRepository.findById(userId);
+
+            if(userOptional.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            User user = userOptional.get();
+
+            if(user.getBalance() >= ticket.getPrice() * quantity){
+                Long newBalance = (long) (user.getBalance() - ticket.getPrice() * quantity);
+                user.setBalance(newBalance);
+                userRepository.save(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Not enough balance");
             }
 
             Booking booking = new Booking();

@@ -26,6 +26,14 @@ public class User {
     private String email;
     private String password;
 
+    public Long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Long balance) {
+        this.balance = balance;
+    }
+
     private Long balance;
 
     @OneToMany
