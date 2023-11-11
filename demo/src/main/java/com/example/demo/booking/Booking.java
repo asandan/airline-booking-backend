@@ -5,6 +5,8 @@ import com.example.demo.transaction.Transaction;
 import com.example.demo.user.User;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "bookings")
 public class Booking {
@@ -32,12 +34,21 @@ public class Booking {
     @JoinColumn(name = "transactionId", referencedColumnName = "id")
     private Transaction transaction;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
+
     private int quantity;
 
     public Booking() {}
 
     public Booking(int quantity) {
         this.quantity = quantity;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
     }
     public Long getId() {
         return id;
