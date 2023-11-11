@@ -3,6 +3,7 @@ package com.example.demo.ticket;
 import com.example.demo.destination.Destination;
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -24,6 +25,15 @@ public class Ticket {
     @ManyToOne()
     @JoinColumn(name = "destinationId", referencedColumnName = "id")
     private Destination destination;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
     private float price;
     private int quantity;
 

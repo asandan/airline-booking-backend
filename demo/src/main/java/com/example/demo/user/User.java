@@ -3,6 +3,7 @@ package com.example.demo.user;
 import com.example.demo.booking.Booking;
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,16 @@ public class User {
     private String phoneNumber;
     @Column(unique = true)
     private String email;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
     private String password;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
     public Long getBalance() {
         return balance;
     }
