@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path="api/city")
 public class CityController {
@@ -15,13 +17,12 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<City> findOne(@PathVariable String id) throws Exception {
+    @GetMapping(path = "byCountry/{id}")
+    public ResponseEntity<List<City>> findAllCitiesByCountry(@PathVariable String id) {
         try {
-            return ResponseEntity.ok(this.cityService.findOne(Long.valueOf(id)));
+            return ResponseEntity.ok(this.cityService.findAllByCountry(Long.valueOf(id)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
 }
