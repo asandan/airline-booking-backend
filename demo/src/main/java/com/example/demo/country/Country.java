@@ -3,6 +3,7 @@ package com.example.demo.country;
 import com.example.demo.city.City;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,17 +11,21 @@ import java.util.List;
 public class Country {
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "country_sequence",
+            sequenceName = "country_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "country_sequence"
     )
     private Long id;
+
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+    private List<City> cities;
 
     public Country() {}
 
@@ -33,8 +38,20 @@ public class Country {
         this.name = name;
     }
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void addCity(City city) {
+        cities.add(city);
+        city.setCountry(this);
+    }
 }

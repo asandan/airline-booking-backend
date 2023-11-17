@@ -26,7 +26,7 @@ public class City {
     private Country country;
     public City() {}
 
-    public City(String name, String state, String country) {
+    public City(String name) {
         this.name = name;
     }
 
@@ -37,6 +37,10 @@ public class City {
 
     public Long getId() {
         return id;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public String getName() {
