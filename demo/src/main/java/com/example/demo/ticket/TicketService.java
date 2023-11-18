@@ -29,14 +29,6 @@ public class TicketService {
                                     "Ticket with destination does not exist"
                             )
                     );
-//            Optional<Destination> foundDestination = Optional.ofNullable(destinationService.getDestinationByCities(destinationFrom, destinationTo));
-//            Optional<Ticket>foundtTicket = Optional.ofNullable(ticketRepository.findTicketByDestinationId(foundDestination.get().getId()));
-//            System.out.println("FOUND TICKET" + foundDestination.get().getId());
-//
-//            if(foundtTicket.isEmpty()){
-//                throw new Exception("Ticket not found");
-//            }
-//            return foundtTicket.get();
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
