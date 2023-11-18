@@ -1,10 +1,7 @@
 package com.example.demo.ticket;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="api/ticket")
@@ -15,11 +12,12 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping(path = "/getByDestination/{destinationId}")
-    public ResponseEntity<Ticket> getTicketByDestination(@PathVariable String destinationId) {
+    @PostMapping(path = "/getByDestination")
+    public ResponseEntity<Ticket> getTicketByDestination(@RequestBody TicketRequest ticketRequest) {
         try {
+            System.out.println(ticketRequest.getDestinationFrom() + " " + ticketRequest.getDestinationTo());
             return ResponseEntity.ok(this.ticketService
-                    .getTicketByDestination(Long.valueOf(destinationId)));
+                    .getTicketByDestination((Long) ticketRequest.getDestinationFrom(), (Long) ticketRequest.getDestinationTo()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }

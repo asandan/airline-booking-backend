@@ -89,14 +89,14 @@ public class BookingService {
             Booking booking = new Booking();
             Transaction transaction = new Transaction();
 
-            booking.setUserId(userId);
-            booking.setTicketId(ticketId);
+            booking.setUser(user);
+            booking.setTicket(ticket);
             booking.setQuantity(quantity);
 
             Booking savedBooking = bookingRepository.save(booking);
 
-            transaction.setUserId(userId);
-            transaction.setBookingId(savedBooking.getId());
+            transaction.setUser(user);
+            transaction.setBooking(savedBooking);
             transaction.setPrice(ticket.getPrice() * quantity);
 
             transactionRepository.save(transaction);
