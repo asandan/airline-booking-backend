@@ -11,11 +11,12 @@ public class DestinationService {
     }
 
     public Destination getDestinationByCities(
-            Long destinationTo
-            , Long destinationFrom) throws Exception{
+            Long destinationFrom
+            , Long destinationTo) throws Exception{
         try {
+            System.out.println("DESTINATION TO: " + destinationTo + " DESTINATION FROM: " + destinationFrom);
             return destinationRepository.
-                    findDestinationByCities(destinationTo, destinationFrom).
+                    findDestinationByCities(destinationFrom, destinationTo).
                     orElseThrow(() -> new IllegalStateException(
                                     "Destination with cities does not exist"
                             )

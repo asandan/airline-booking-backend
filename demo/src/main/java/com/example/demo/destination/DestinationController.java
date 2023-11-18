@@ -1,26 +1,20 @@
 package com.example.demo.destination;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="api/destination")
 public class DestinationController {
-    private final DestinationService destinationService;
+    private final DestinationRepository destinationRepository;
 
-    public DestinationController(DestinationService destinationService) {
-        this.destinationService = destinationService;
+    public DestinationController(DestinationService destinationService, DestinationRepository destinationRepository){
+        this.destinationRepository = destinationRepository;
     }
 
-    @GetMapping("/getByCities")
-    public Destination getDestinationByCities(
-             @RequestBody String destinationTo
-            , @RequestBody String destinationFrom) throws Exception {
-        Long destinationToLong = Long.valueOf(destinationTo);
-        Long destinationFromLong = Long.valueOf(destinationFrom);
-        return this.destinationService.getDestinationByCities(destinationToLong, destinationFromLong);
+    @PostMapping("/getByCities")
+    public Destination getDestinationByCities(@RequestBody DestinationQuery query) throws Exception {
+        Long destinationFromLong = Long.valueOf(query.getDestinationFrom());
+        Long destinationToLong = Long.valueOf(query.getDestinationTo());
+        return destinationRepository.findDestinationByCities(destinationFromLong, destinationToLong);
     }
-
 }

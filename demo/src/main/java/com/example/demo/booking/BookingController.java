@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="api/booking")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
     private final BookingService bookingService;
     public BookingController(BookingService bookingService){
@@ -28,9 +29,10 @@ public class BookingController {
         }
     }
 
-    @PostMapping(path = "/book")
+    @PostMapping(path = "book")
     public Object createBooking(@RequestBody BookingRequest booking) {
         try {
+            System.out.println(booking.getQuantity() + " " + booking.getTicketId() + " " + booking.getUserId());
             ResponseEntity<String> newBooking = this.bookingService.book(booking);
             return ResponseEntity.ok(newBooking).toString();
         } catch (Exception e){

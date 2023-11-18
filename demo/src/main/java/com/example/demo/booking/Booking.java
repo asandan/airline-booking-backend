@@ -12,13 +12,13 @@ import java.util.Date;
 public class Booking {
     @Id
     @SequenceGenerator(
-            name = "destination_sequence",
-            sequenceName = "destination_sequence",
+            name = "booking_sequence",
+            sequenceName = "booking_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "destination_sequence"
+            generator = "booking_sequence"
     )
     private Long id;
 
@@ -29,6 +29,30 @@ public class Booking {
     @ManyToOne()
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
 
     @OneToOne
     @JoinColumn(name = "transactionId", referencedColumnName = "id")

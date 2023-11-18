@@ -22,11 +22,11 @@ public class Destination {
     private Long id;
 
     @ManyToOne()
-    @JoinColumn(name = "destinationFrom", referencedColumnName = "id")
+    @JoinColumn(name = "destinationFromId", referencedColumnName = "id")
     private City destinationFrom;
 
     @ManyToOne()
-    @JoinColumn(name = "destinationTo", referencedColumnName = "id")
+    @JoinColumn(name = "destinationToId", referencedColumnName = "id")
     private City destinationTo;
 
     private String description;
