@@ -1,5 +1,6 @@
 package com.example.demo.ticket;
 
+import com.example.demo.city.City;
 import com.example.demo.destination.Destination;
 import jakarta.persistence.*;
 
@@ -34,6 +35,11 @@ public class Ticket {
     protected void onCreate() {
         createdAt = new Date();
     }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
     private float price;
     private int quantity;
 
@@ -79,5 +85,9 @@ public class Ticket {
 
     public Ticket orElseThrow(Supplier<? extends RuntimeException> exceptionSupplier) {
         return Optional.of(this).orElseThrow(exceptionSupplier);
+    }
+
+    public Long getDestination() {
+        return this.destination.getId();
     }
 }

@@ -33,9 +33,19 @@ public class Destination {
 
     public Destination() {}
 
+    public void setDestinationFrom(City destinationFrom) {
+        this.destinationFrom = destinationFrom;
+    }
+
+    public void setDestinationTo(City destinationTo) {
+        this.destinationTo = destinationTo;
+    }
+
     public Destination(String description) {
         this.description = description;
     }
+
+
 
     public Long getId() {
         return id;
