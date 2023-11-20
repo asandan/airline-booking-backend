@@ -3,95 +3,92 @@ package com.example.demo.transaction;
 import com.example.demo.booking.Booking;
 import com.example.demo.user.User;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    @Id
-    @SequenceGenerator(
-            name = "transaction_sequence",
-            sequenceName = "transaction_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "transaction_sequence"
-    )
-    private Long id;
 
-    @OneToOne()
-    @JoinColumn(name = "bookingId", referencedColumnName = "id")
-    private Booking booking;
+  @Id
+  @SequenceGenerator(
+    name = "transaction_sequence",
+    sequenceName = "transaction_sequence",
+    allocationSize = 1
+  )
+  @GeneratedValue(
+    strategy = GenerationType.SEQUENCE,
+    generator = "transaction_sequence"
+  )
+  private Long id;
 
-    @ManyToOne()
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private User user;
+  @OneToOne
+  @JoinColumn(name = "bookingId", referencedColumnName = "id")
+  private Booking booking;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+  @ManyToOne
+  @JoinColumn(name = "userId", referencedColumnName = "id")
+  private User user;
 
-    private float price;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at", nullable = false)
+  private Date createdAt;
 
-    public Transaction() {}
+  private float price;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
-    }
-    public Long getId() {
-        return id;
-    }
+  public Transaction() {}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  @PrePersist
+  protected void onCreate() {
+    createdAt = new Date();
+  }
 
-    public Booking getBooking() {
-        return booking;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setBookingId(Long bookingId){
-        this.booking.setId(bookingId);
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+  public Booking getBooking() {
+    return booking;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public void setBookingId(Long bookingId) {
+    this.booking.setId(bookingId);
+  }
 
-    public void setUserId(Long userId){
-        this.user.setId(userId);
-    }
+  public void setBooking(Booking booking) {
+    this.booking = booking;
+  }
 
-    public Long getUserId(){
-        return this.user.getId();
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUserId(Long userId) {
+    this.user.setId(userId);
+  }
 
-    public float getPrice() {
-        return price;
-    }
+  public Long getUserId() {
+    return this.user.getId();
+  }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public Transaction(Booking booking, User user, float price) {
-        this.booking = booking;
-        this.user = user;
-        this.price = price;
-    }
+  public float getPrice() {
+    return price;
+  }
 
+  public void setPrice(float price) {
+    this.price = price;
+  }
 
-
-
+  public Transaction(Booking booking, User user, float price) {
+    this.booking = booking;
+    this.user = user;
+    this.price = price;
+  }
 }

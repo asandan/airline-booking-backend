@@ -2,104 +2,110 @@ package com.example.demo.user;
 
 import com.example.demo.booking.Booking;
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    private Long id;
-    private String name;
-    @Column(unique = true)
-    private String phoneNumber;
-    @Column(unique = true)
-    private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
-    private String password;
+  @Id
+  @SequenceGenerator(
+    name = "user_sequence",
+    sequenceName = "user_sequence",
+    allocationSize = 1
+  )
+  @GeneratedValue(
+    strategy = GenerationType.SEQUENCE,
+    generator = "user_sequence"
+  )
+  private Long id;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
-    }
-    public Long getBalance() {
-        return balance;
-    }
+  private String name;
 
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
+  @Column(unique = true)
+  private String phoneNumber;
 
-    private Long balance;
+  @Column(unique = true)
+  private String email;
 
-    @OneToMany
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private List<Booking> bookings;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "created_at", nullable = false)
+  private Date createdAt;
 
-    public User() {}
+  private String password;
 
-    public User(String name,
-                String email,
-                String phoneNumber,
-                String password,
-                Long balance
-    ) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.balance = balance;
-    }
+  @PrePersist
+  protected void onCreate() {
+    createdAt = new Date();
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getBalance() {
+    return balance;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setBalance(Long balance) {
+    this.balance = balance;
+  }
 
-    public String getName() {
-        return name;
-    }
+  private Long balance;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @OneToMany
+  @JoinColumn(name = "userId", referencedColumnName = "id")
+  private List<Booking> bookings;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public User() {}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  public User(
+    String name,
+    String email,
+    String phoneNumber,
+    String password,
+    Long balance
+  ) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.balance = balance;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 }

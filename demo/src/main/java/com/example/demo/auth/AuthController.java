@@ -14,33 +14,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller("/api/auth")
 public class AuthController {
-    private final UserService userService;
 
-    @Autowired
-    public AuthController(UserService userService){
-        this.userService = userService;
+  private final UserService userService;
+
+  @Autowired
+  public AuthController(UserService userService) {
+    this.userService = userService;
+  }
+
+  @PostMapping("api/auth/signup")
+  public ResponseEntity<?> signUp(@RequestBody User user) throws Exception {
+    try {
+      User newUser = this.userService.signUp(user);
+      return ResponseEntity.ok(newUser);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+  }
 
-    @PostMapping("api/auth/signup")
-    public ResponseEntity<?> signUp(@RequestBody User user) throws Exception{
-        try {
-            User newUser = this.userService.signUp(user);
-            return ResponseEntity.ok(newUser);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+  @PostMapping("/api/auth/signin")
+  public ResponseEntity<?> signIn(@RequestBody User user) {
+    try {
+      User userFound = this.userService.signIn(user);
+      return ResponseEntity.ok(userFound); // Return the user if found.
+    } catch (UsernameNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"); // Return a 404 response with an error message.
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()); // Return a 400 response with an error message.
     }
-
-    @PostMapping("/api/auth/signin")
-    public ResponseEntity<?> signIn(@RequestBody User user) {
-        try {
-            User userFound = this.userService.signIn(user);
-            return ResponseEntity.ok(userFound); // Return the user if found.
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"); // Return a 404 response with an error message.
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()); // Return a 400 response with an error message.
-        }
-    }
-
+  }
 }

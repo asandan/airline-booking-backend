@@ -1,22 +1,23 @@
 package com.example.demo.destination;
 
 public class DestinationQuery {
-    private String destinationFrom;
-    private String destinationTo;
 
-    public String getDestinationFrom() {
-        return destinationFrom;
-    }
+  private String destinationFrom;
+  private String destinationTo;
 
-    public void setDestinationFrom(String destinationFrom) {
-        this.destinationFrom = destinationFrom;
-    }
+  public String getDestinationFrom() {
+    return destinationFrom;
+  }
 
-    public String getDestinationTo() {
-        return destinationTo;
-    }
+  public void setDestinationFrom(String destinationFrom) {
+    this.destinationFrom = destinationFrom;
+  }
 
-    public void setDestinationTo(String destinationTo) {
-        this.destinationTo = destinationTo;
-    }
+  public String getDestinationTo() {
+    return destinationTo;
+  }
+
+  public void setDestinationTo(String destinationTo) {
+    this.destinationTo = destinationTo;
+  }
 }
